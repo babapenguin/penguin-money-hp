@@ -3,17 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>企鵝資金控制台</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 26px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
+
   <h1>🐧 企鵝資金控制台</h1>
 
-  <p>GitHub 房子蓋成功了！</p>
+  <p>💰 本月收入</p>
+  <input id="income" type="number" placeholder="輸入本月收入">
 
-  <h2>❤️ 自由 HP</h2>
-  <p>尚未設定</p>
+  <p>📈 先投資多少</p>
+  <input id="investment" type="number" placeholder="輸入投資金額">
 
-  <button>🔮 試算一筆</button>
+  <button onclick="calculateMoney()">計算企鵝生活池</button>
+
+  <div id="result">
+    ❤️ 尚未計算
+  </div>
+
+  <script>
+    function calculateMoney() {
+      let income =
+        Number(document.getElementById("income").value);
+
+      let investment =
+        Number(document.getElementById("investment").value);
+
+      let money = income - investment;
+
+      document.getElementById("result").innerText =
+        "❤️ 本月生活池：$" + money.toLocaleString();
+    }
+  </script>
+
 </body>
 </html>
