@@ -25,12 +25,14 @@
     button {
       width: 100%;
       padding: 14px;
+      margin-top: 8px;
       font-size: 18px;
     }
 
-    #result {
-      margin-top: 30px;
-      font-size: 24px;
+    #result,
+    #previewResult {
+      margin-top: 25px;
+      font-size: 22px;
       font-weight: bold;
     }
   </style>
@@ -58,9 +60,23 @@
     ❤️ 尚未計算
   </div>
 
-  <script>
-    function calculateMoney() {
+  <hr style="margin: 35px 0;">
 
+  <h2>🔮 試算一筆</h2>
+
+  <p>想買多少錢的東西？</p>
+  <input id="purchase" type="number" placeholder="例如：2500">
+
+  <button onclick="previewPurchase()">先看看買完剩多少</button>
+
+  <div id="previewResult">
+    🐧 尚未試算
+  </div>
+
+  <script>
+    let currentFreeHP = 0;
+
+    function calculateMoney() {
       let income =
         Number(document.getElementById("income").value);
 
@@ -75,14 +91,28 @@
 
       let lifePool = income - investment;
 
-      let freeHP =
+      currentFreeHP =
         lifePool - committed - buffer;
 
       document.getElementById("result").innerHTML =
         "❤️ 本月生活池：$" +
         lifePool.toLocaleString() +
         "<br><br>✨ 真正自由 HP：$" +
-        freeHP.toLocaleString();
+        currentFreeHP.toLocaleString();
+    }
+
+    function previewPurchase() {
+      let purchase =
+        Number(document.getElementById("purchase").value);
+
+      let afterPurchase =
+        currentFreeHP - purchase;
+
+      document.getElementById("previewResult").innerHTML =
+        "🐧 現在 HP：$" +
+        currentFreeHP.toLocaleString() +
+        "<br><br>💥 買完會剩：$" +
+        afterPurchase.toLocaleString();
     }
   </script>
 
