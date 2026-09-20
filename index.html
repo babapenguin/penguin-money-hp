@@ -30,7 +30,7 @@
 
     #result {
       margin-top: 30px;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: bold;
     }
   </style>
@@ -46,7 +46,13 @@
   <p>📈 先投資多少</p>
   <input id="investment" type="number" placeholder="輸入投資金額">
 
-  <button onclick="calculateMoney()">計算企鵝生活池</button>
+  <p>🔒 已承諾支出</p>
+  <input id="committed" type="number" placeholder="手機、私教、訂閱等">
+
+  <p>🛟 保命金</p>
+  <input id="buffer" type="number" placeholder="這筆錢先不要碰">
+
+  <button onclick="calculateMoney()">計算企鵝 HP</button>
 
   <div id="result">
     ❤️ 尚未計算
@@ -54,16 +60,29 @@
 
   <script>
     function calculateMoney() {
+
       let income =
         Number(document.getElementById("income").value);
 
       let investment =
         Number(document.getElementById("investment").value);
 
-      let money = income - investment;
+      let committed =
+        Number(document.getElementById("committed").value);
 
-      document.getElementById("result").innerText =
-        "❤️ 本月生活池：$" + money.toLocaleString();
+      let buffer =
+        Number(document.getElementById("buffer").value);
+
+      let lifePool = income - investment;
+
+      let freeHP =
+        lifePool - committed - buffer;
+
+      document.getElementById("result").innerHTML =
+        "❤️ 本月生活池：$" +
+        lifePool.toLocaleString() +
+        "<br><br>✨ 真正自由 HP：$" +
+        freeHP.toLocaleString();
     }
   </script>
 
