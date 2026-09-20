@@ -72,49 +72,89 @@
   <div id="previewResult">
     🐧 尚未試算
   </div>
+<script>
+  let currentFreeHP = 0;
 
-  <script>
-    let currentFreeHP = 0;
+  function calculateMoney() {
+    let income =
+      Number(document.getElementById("income").value);
 
-    function calculateMoney() {
-      let income =
-        Number(document.getElementById("income").value);
+    let investment =
+      Number(document.getElementById("investment").value);
 
-      let investment =
-        Number(document.getElementById("investment").value);
+    let committed =
+      Number(document.getElementById("committed").value);
 
-      let committed =
-        Number(document.getElementById("committed").value);
+    let buffer =
+      Number(document.getElementById("buffer").value);
 
-      let buffer =
-        Number(document.getElementById("buffer").value);
+    // 💾 記住輸入的資料
+    localStorage.setItem("income", income);
+    localStorage.setItem("investment", investment);
+    localStorage.setItem("committed", committed);
+    localStorage.setItem("buffer", buffer);
 
-      let lifePool = income - investment;
+    let lifePool = income - investment;
 
-      currentFreeHP =
-        lifePool - committed - buffer;
+    currentFreeHP =
+      lifePool - committed - buffer;
 
-      document.getElementById("result").innerHTML =
-        "❤️ 本月生活池：$" +
-        lifePool.toLocaleString() +
-        "<br><br>✨ 真正自由 HP：$" +
-        currentFreeHP.toLocaleString();
+    document.getElementById("result").innerHTML =
+      "❤️ 本月生活池：$" +
+      lifePool.toLocaleString() +
+      "<br><br>✨ 真正自由 HP：$" +
+      currentFreeHP.toLocaleString();
+  }
+
+  function previewPurchase() {
+    let purchase =
+      Number(document.getElementById("purchase").value);
+
+    let afterPurchase =
+      currentFreeHP - purchase;
+
+    document.getElementById("previewResult").innerHTML =
+      "🐧 現在 HP：$" +
+      currentFreeHP.toLocaleString() +
+      "<br><br>💥 買完會剩：$" +
+      afterPurchase.toLocaleString();
+  }
+
+  // 🐧 網頁打開時，把以前的資料拿回來
+  window.addEventListener("DOMContentLoaded", function() {
+
+    let income = localStorage.getItem("income");
+    let investment = localStorage.getItem("investment");
+    let committed = localStorage.getItem("committed");
+    let buffer = localStorage.getItem("buffer");
+
+    if (income !== null) {
+      document.getElementById("income").value = income;
     }
 
-    function previewPurchase() {
-      let purchase =
-        Number(document.getElementById("purchase").value);
-
-      let afterPurchase =
-        currentFreeHP - purchase;
-
-      document.getElementById("previewResult").innerHTML =
-        "🐧 現在 HP：$" +
-        currentFreeHP.toLocaleString() +
-        "<br><br>💥 買完會剩：$" +
-        afterPurchase.toLocaleString();
+    if (investment !== null) {
+      document.getElementById("investment").value = investment;
     }
-  </script>
+
+    if (committed !== null) {
+      document.getElementById("committed").value = committed;
+    }
+
+    if (buffer !== null) {
+      document.getElementById("buffer").value = buffer;
+    }
+
+    // 如果以前填過，就自動重新計算
+    if (
+      income !== null &&
+      investment !== null &&
+      committed !== null &&
+      buffer !== null
+    ) {
+      calculateMoney();
+    }
+  });
+</script>
 
 </body>
 </html>
